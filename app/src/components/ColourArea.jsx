@@ -16,7 +16,6 @@ export default class ColourArea extends Component {
     render() {
         return (
             <div className="colour-area">
-                <Hue onHueChange={this.handleHue.bind(this)} className="hue-circle"/>
                 <Map
                     x={this.state.s}
                     y={this.state.v}
@@ -28,13 +27,14 @@ export default class ColourArea extends Component {
                         color: (this.state.s > 50 || this.state.v < 70) ? 'white' : 'black'
                     }}
                 />
+                <Hue onHueChange={this.handleHue.bind(this)} className="hue-circle"/>
+                
             </div>
         )
     }
 
     handleHue(h) {
         this.setState({h: h, hex: tinycolor(`hsl(${h}, 100%, 50%)`).toHexString()})
-        console.log(h)
     }
 
     handleSaturationValue(s, v) {
