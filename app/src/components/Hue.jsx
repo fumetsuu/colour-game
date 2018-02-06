@@ -59,7 +59,6 @@ class Hue extends React.Component {
         const xRelativeToCenter = this.centerOffset-xMouseIs
         const yRelativeToCenter = this.centerOffset-yMouseIs
         const degree = Math.atan(yRelativeToCenter/xRelativeToCenter)*180/Math.PI - 90 + (xRelativeToCenter>=0 ? 0 : 180);
-        console.log(degree)
         this.setState({
           hue: degree
         })
@@ -105,7 +104,7 @@ class Hue extends React.Component {
   const Marker = ({degree, radius}) => {
     const startX  =   Math.sin((degree)/180*Math.PI)*radius;
     const startY  = - Math.cos((degree)/180*Math.PI)*radius;
-    return <circle cx={startX} cy={startY} r="8" stroke={degree >= 35 && degree <= 80 ? 'black' : 'white'} stroke-width="2" fill=""></circle>
+    return <circle cx={startX} cy={startY} r="8" stroke={degree >= 35 && degree <= 80 ? 'black' : 'white'} strokeWidth="2" fill=""></circle>
   }
   
 export default Hue

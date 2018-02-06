@@ -1,3 +1,5 @@
+$color-area-bg: rgb(45, 50, 63)
+
 body, html, #app
     background-color: grey
     height: 100%
@@ -17,10 +19,12 @@ body, html, #app
         position: relative
         width: 400px
         height: 400px
+        background-color: $color-area-bg
         .sat-val-map
             width: 195px
             height: 195px
             position: absolute
+            z-index: 100000000 !important
             left: 50% !important
             top: 50% !important
             transform: translate(-50%,-50%)
@@ -31,3 +35,23 @@ body, html, #app
         svg
             fill: none
             stroke-width: 20px
+            position: absolute
+            z-index: 1000000
+        .pseudo-border-hue
+            width: 324px
+            height: 324px
+            background-color: white
+            border-radius: 50%
+            position: absolute
+            top: 58px
+            left: 58px
+            user-select: none
+        .pseudo-border-hue2
+            width: 276px
+            height: 276px
+            background-color: $color-area-bg
+            border-radius: 50%
+            position: absolute
+            top: 82px
+            left: 82px
+            user-select: none

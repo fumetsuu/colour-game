@@ -28,6 +28,8 @@ export default class ColourArea extends Component {
                     }}
                 />
                 <Hue onHueChange={this.handleHue.bind(this)} className="hue-circle"/>
+                <div className="pseudo-border-hue"/>
+                <div className="pseudo-border-hue2"/>
                 
             </div>
         )
