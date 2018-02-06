@@ -27,7 +27,12 @@
   },
   "dependencies": {
     "babel-preset-react": "^6.24.1",
+    "coloreact": "^0.2.4",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-circular-color": "^1.2.0",
+    "react-color-wheel": "0.0.3",
+    "react-dom": "^16.2.0",
+    "rxjs": "^5.5.6",
+    "tinycolor2": "^1.4.1"
   }
 }

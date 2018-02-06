@@ -1,3 +1,35 @@
-body
-    background-color: green
-    color: red
+body, html, #app
+    background-color: grey
+    height: 100%
+    margin: 0
+    padding: 0
+
+.wrapper
+    display: grid
+    grid-template-columns: auto 400px
+    grid-template-rows: 100%
+    height: 100%
+    width: 100%
+    .colour-area
+        padding: 20px
+        justify-self: end
+        grid-column: 2
+        position: relative
+        width: auto
+        height: fit-content
+        .sat-val-map
+            width: 195px
+            height: 195px
+            position: absolute
+            left: 50% !important
+            top: 50% !important
+            transform: translate(-50%,-50%)
+        .hue
+            background-color: red
+    
+.marker
+    stroke-width: 25px
+
+svg
+    fill: none
+    stroke-width: 20px
