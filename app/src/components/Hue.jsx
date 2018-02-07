@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import Rx from 'rxjs/Rx'
 
 class Hue extends React.Component {
-    constructor({onHueChange}) {
-      super({onHueChange});
+    constructor(props) {
+      super(props);
       
       const padding = 100;
       const innerSize = 300;
@@ -12,7 +12,7 @@ class Hue extends React.Component {
       this.centerOffset = this.outterSize/2;
       
       this.state = {
-        hue: 0
+        hue: this.props.hue
       }
       
       this.canvas = null;
@@ -37,7 +37,7 @@ class Hue extends React.Component {
             ))}
             <g ref={(selector) => { this.selector = selector; }}>
               <Marker 
-                degree={this.state.hue}
+                degree={this.props.hue}
                 radius={this.radius}/>
             </g>
           </g>
@@ -58,7 +58,8 @@ class Hue extends React.Component {
         const yMouseIs = clickEvent.offsetY
         const xRelativeToCenter = this.centerOffset-xMouseIs
         const yRelativeToCenter = this.centerOffset-yMouseIs
-        const degree = Math.round(Math.atan(yRelativeToCenter/xRelativeToCenter)*180/Math.PI - 90 + (xRelativeToCenter>=0 ? 0 : 180))
+        var deg = Math.round(Math.atan(yRelativeToCenter/xRelativeToCenter)*180/Math.PI - 90 + (xRelativeToCenter>=0 ? 0 : 180))
+        const degree = deg < 0 ? 360+deg : deg
         this.setState({
           hue: degree
         })

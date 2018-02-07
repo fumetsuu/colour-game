@@ -32,6 +32,8 @@
     "react-circular-color": "^1.2.0",
     "react-color-wheel": "0.0.3",
     "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
     "rxjs": "^5.5.6",
     "tinycolor2": "^1.4.1"
   }

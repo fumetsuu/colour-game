@@ -1,11 +1,13 @@
 $color-area-bg: #2d323f
 $main-bg: #3c414e
+$dark-grey: #282c35
 
 body, html, #app
     background-color: $main-bg
     height: 100%
     margin: 0
     padding: 0
+    user-select: none
 
 .wrapper
     display: grid
@@ -18,6 +20,9 @@ body, html, #app
         justify-self: end
         height: 100%
         background-color: $color-area-bg
+        display: grid
+        grid-template-columns: 100%
+        grid-template-rows: 425px 220px 60px auto
         .colour-area-picker
             padding: 20px
             position: relative
@@ -48,7 +53,6 @@ body, html, #app
                 position: absolute
                 top: 58px
                 left: 58px
-                user-select: none
             .pseudo-border-hue2
                 width: 276px
                 height: 276px
@@ -57,15 +61,62 @@ body, html, #app
                 position: absolute
                 top: 82px
                 left: 82px
-                user-select: none
-    .colours-text
+    .colours-sliders
         font-family: 'Lato'
+        font-weight: 300
         color: white
-        font-size: 18px
-        tab-size: 40px
-        text-align: center
-        line-height: 40px
+        font-size: 12px
+        margin-left: 40px
+        display: grid
+        grid-template-columns: 100%
+        grid-template-rows: 15px 50px 15px 50px 15px 50px
     .colour-preview
         width: 70%
         height: 40px
         justify-self: center
+        border: 2px solid white
+        outline: 1px solid grey
+        user-select: none
+    .control-buttons
+        display: flex
+        justify-self: center
+        .control-button
+            width: 50px
+            height: 50px
+            background-color: $dark-grey
+            color: $main-bg
+            border-radius: 5px
+            text-align: center
+            line-height: 60px
+            margin: 20px
+            user-select: none
+            &:hover
+                cursor: pointer
+                filter: brightness(1.3)
+.user-image-wrapper
+    grid-column: 1/#{2}
+    margin: 20px
+    display: grid
+    grid-template-columns: 100%
+    grid-template-rows: 10% 80% 10%
+    .user-image
+        width: 80%
+        height: 80%
+        background-size: contain
+        background-position: center
+        justify-self: center
+        background-repeat: no-repeat
+    .reveal-button
+        justify-self: center
+        width: 25%
+        background-color: $dark-grey
+        color: $main-bg
+        text-transform: uppercase
+        font-family: 'Source Sans Pro'
+        font-size: 1.4rem
+        border-radius: 5px
+        letter-spacing: 1px
+        text-align: center
+        height: 50px
+        line-height: 50px
+        user-select: none

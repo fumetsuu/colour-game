@@ -1,22 +1,22 @@
+const path = require('path')
 import React, { Component } from 'react'
 import { Map } from 'coloreact'
 import Hue from './Hue.jsx'
+import HueSlider from './HueSlider.jsx'
 const tinycolor = require('tinycolor2')
+import { connect } from 'react-redux'
 
-export default class ColourArea extends Component {
+class ColourArea extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            h: 355,
+            h: 0,
             s: 0,
             v: 0,
-            hex: "#ff0000"
+            hex: "#000000"
         }
-    }
+    }1
     render() {
-        var colsText1 = `H: ${this.state.h}　　S: ${Math.round(this.state.s)}　　V: ${Math.round(this.state.v)}`
-        var colsText2 = `R: ${tinycolor(this.state.hex).toRgb().r}　　G: ${tinycolor(this.state.hex).toRgb().g}　　B: ${tinycolor(this.state.hex).toRgb().b}`
-        var colsText3 = ` Hex: ${this.state.hex}`
         return (
             <div className="colour-area">
                 <div className="colour-area-picker">
@@ -31,16 +31,20 @@ export default class ColourArea extends Component {
                             color: (this.state.s > 50 || this.state.v < 70) ? 'white' : 'black'
                         }}
                     />
-                    <Hue onHueChange={this.handleHue.bind(this)} className="hue-circle"/>
+                    <Hue onHueChange={this.handleHue.bind(this)} hue={this.state.h} className="hue-circle"/>
                     <div className="pseudo-border-hue"/>
                     <div className="pseudo-border-hue2"/>
                 </div>
-                <div className="colours-text">
-                    {colsText1}<br/>
-                    {colsText2}<br/>
-                    {colsText3}
+                <div className="colours-sliders">
+                    <span className="colour-labels">H: {(this.state.h)}</span> <HueSlider onHueSlide={this.handleHue.bind(this)} hue={this.state.h} className="hue-slider" width={350} height={30}/>
+                    <span className="colour-labels">S: {Math.round(this.state.s)}</span> <HueSlider onHueSlide={this.handleHue.bind(this)} hue={this.state.h} className="hue-slider" width={350} height={30}/>
+                    <span className="colour-labels">V: {Math.round(this.state.v)}</span> <HueSlider onHueSlide={this.handleHue.bind(this)} hue={this.state.h} className="hue-slider" width={350} height={30}/>
                 </div>
                 <div className="colour-preview" style={{backgroundColor: this.state.hex}}/>
+                <div className="control-buttons">
+                        <div className="control-button"><i className="material-icons">attach_file</i></div>
+                        <div className="control-button" onClick={this.handleFileUpload.bind(this)}><i className="material-icons">insert_drive_file</i></div>
+                </div>
             </div>
         )
     }
@@ -50,7 +54,30 @@ export default class ColourArea extends Component {
     }
 
     handleSaturationValue(s, v) {
-        console.log(s,v)
-        this.setState({ s: s, v: v, hex: tinycolor(`hsv(${this.state.h}, ${this.state.s}, ${this.state.v})`).toHexString()})
+        this.setState({ s: s, v: v, hex: tinycolor(`hsv(${this.state.h}, ${s}, ${v})`).toHexString()})
+    }
+
+    handleFileUpload() {
+        require('electron').remote.dialog.showOpenDialog({
+            properties: ['openFile'],
+            filters: [
+                { name: 'Images', extensions: ['jpg', 'png', 'jpeg'] }
+            ]
+        }, filepath => {
+            this.props.chooseImage(path.normalize(filepath[0]).replace(/\\/g, "/"))
+        })
     }
 }
+
+const mapDispatchToProps = dispatch => {
+    return {
+        chooseImage: filepath => dispatch({
+            type: "OPEN_IMAGE",
+            payload: {
+                imagePath: filepath
+            }
+        })
+    }
+}
+
+export default connect(null, mapDispatchToProps)(ColourArea)
