@@ -52,20 +52,20 @@ class ColourArea extends Component {
     }
 
     handleHue(h) {
-        this.setState({h: h, hex: tinycolor(`hsv(${h}, ${this.state.s}, ${this.state.v})`).toHexString()})
+        this.setState({h: h, hex: tinycolor(`hsv(${h}, ${this.state.s}%, ${this.state.v}%)`).toHexString()})
     }
 
     handleSat(s) {
-        this.setState({s: s, hex: tinycolor(`hsv(${this.state.h}, ${s}, ${this.state.v})`).toHexString()})
+        this.setState({s: s, hex: tinycolor(`hsv(${this.state.h}, ${s}%, ${this.state.v}%)`).toHexString()})
     }
 
     handleVal(v) {
-        this.setState({v: v, hex: tinycolor(`hsv(${this.state.h}, ${this.state.s}, ${v})`).toHexString()})
+        this.setState({v: v, hex: tinycolor(`hsv(${this.state.h}, ${this.state.s}%, ${v}%)`).toHexString()})
     }
 
 
     handleSaturationValue(s, v) {
-        this.setState({ s: s, v: v, hex: tinycolor(`hsv(${this.state.h}, ${s}, ${v})`).toHexString()})
+        this.setState({ s: s, v: v, hex: tinycolor(`hsv(${this.state.h}, ${s}%, ${v}%)`).toHexString()})
     }
 
     handleFileUpload() {
@@ -85,7 +85,8 @@ const mapDispatchToProps = dispatch => {
         chooseImage: filepath => dispatch({
             type: "OPEN_IMAGE",
             payload: {
-                imagePath: filepath
+                imagePath: filepath,
+                sampleRadius: 50
             }
         })
     }

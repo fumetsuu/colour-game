@@ -28,6 +28,7 @@
   "dependencies": {
     "babel-preset-react": "^6.24.1",
     "coloreact": "^0.2.4",
+    "jimp": "^0.2.28",
     "react": "^16.2.0",
     "react-circular-color": "^1.2.0",
     "react-color-wheel": "0.0.3",

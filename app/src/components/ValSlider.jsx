@@ -26,7 +26,7 @@ export default class SatSlider extends React.Component {
                 position: 'absolute',
                 userFocus: 'none'
             }}>
-            <Marker left={this.props.val*this.props.width/100 > this.props.width-3 ? this.props.width-3 : this.props.val*this.props.width/100} height={this.props.height}/> 
+            <Marker left={this.props.val*this.props.width/100 > this.props.width-4 ? this.props.width-4 : this.props.val*this.props.width/100} height={this.props.height}/> 
             </div>  
         </div>
     );
@@ -54,8 +54,8 @@ export default class SatSlider extends React.Component {
         let leftNorm = moveEvent.clientX - xMouseDelta
         if(leftNorm<0) {
           leftNorm = 0
-        } else if(leftNorm>this.props.width-4) {
-          leftNorm = this.props.width-4
+        } else if(leftNorm>this.props.width) {
+          leftNorm = this.props.width
         }
         return leftNorm
       })

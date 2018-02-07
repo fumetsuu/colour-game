@@ -21,7 +21,7 @@ export default class HueSlider extends React.Component {
                 position: 'absolute',
                 userFocus: 'none'
             }}>
-            <Marker left={this.props.hue*this.props.width/360} height={this.props.height}/> 
+            <Marker left={this.props.hue*this.props.width/360 > this.props.width-4 ? this.props.width-4:this.props.hue*this.props.width/360} height={this.props.height}/> 
             </div>  
         </div>
     );
@@ -32,8 +32,7 @@ export default class HueSlider extends React.Component {
     mouseDown.subscribe(clickEvent => {
       const hue = Math.round(360*(clickEvent.offsetX/this.props.width)) > 360 ? 360 : Math.round(360*(clickEvent.offsetX/this.props.width))
       this.setState({
-        hue: hue,
-        leftNormalised: clickEvent.offsetX > (this.props.width-4) ? (this.props.width-4) : clickEvent.offsetX
+        hue: hue
       })
       this.props.onHueSlide(hue)
 
@@ -50,8 +49,8 @@ export default class HueSlider extends React.Component {
         let leftNorm = moveEvent.clientX - xMouseDelta
         if(leftNorm<0) {
           leftNorm = 0
-        } else if(leftNorm>this.props.width-4) {
-          leftNorm = this.props.width-4
+        } else if(leftNorm>this.props.width) {
+          leftNorm = this.props.width
         }
         return leftNorm
       })
@@ -60,8 +59,7 @@ export default class HueSlider extends React.Component {
     mouseDrags.forEach(leftNorm => {
       const hue = Math.round(360*(leftNorm/this.props.width))
       this.setState({
-        hue: hue,
-        leftNormalised: leftNorm > (this.props.width) ? this.props.width : leftNorm
+        hue: hue
       })
       this.props.onHueSlide(hue)
     })

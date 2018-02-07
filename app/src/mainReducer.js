@@ -4,7 +4,8 @@ export default function reducer(state = { imagePath: null }, action) {
     switch(action.type) {
         case "OPEN_IMAGE": {
             return Object.assign({}, state, {
-                imagePath: action.payload.imagePath
+                imagePath: action.payload.imagePath,
+                sampleRadius: action.payload.sampleRadius
             })
         }
         default: return state

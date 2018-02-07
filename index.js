@@ -1,7 +1,9 @@
 const electron = require('electron');
 const { app, BrowserWindow } = electron;
 
-require('electron-reload')(__dirname);
+require('electron-reload')(__dirname, {
+    ignored: /temp\/|node_modules\//
+});
 
 let mainWindow;
 
