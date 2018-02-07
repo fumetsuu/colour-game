@@ -1,41 +1,45 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Rx from 'rxjs/Rx'
+import tinycolor from 'tinycolor2'
 
-export default class HueSlider extends React.Component {
+export default class SatSlider extends React.Component {
   constructor(props) {
     super(props)
-    this.hueslider = null
+    this.satslider = null
     this.state = {
-      hue: this.props.hue
+        hue: this.props.hue,
+        sat: this.props.sat,
+        val: this.props.val
     }
   }
   
   render() {
+      var gradpoint1 = tinycolor(`hsv(${this.props.hue}, 0, ${this.props.val}%)`).toHexString()
+      var gradpoint2 = tinycolor(`hsv(${this.props.hue}, 100%, ${this.props.val}%)`).toHexString()
     return (   
         <div style={{position: 'relative'}} >
-            <div className="hue-slider" ref={slider => { this.hueslider = slider }} style={{
-                background: `linear-gradient(to right, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%)`,
+            <div className="sat-slider" ref={slider => { this.satslider = slider }} style={{
+                background: `linear-gradient(to right, ${gradpoint1} 0%, ${gradpoint2} 100%)`,
                 width: this.props.width+'px',
                 height: this.props.height+'px',
                 position: 'absolute',
                 userFocus: 'none'
             }}>
-            <Marker left={this.props.hue*this.props.width/360} height={this.props.height}/> 
+            <Marker left={this.props.sat*this.props.width/100 > this.props.width-3 ? this.props.width-3 : this.props.sat*this.props.width/100} height={this.props.height}/> 
             </div>  
         </div>
     );
   }
   
   componentDidMount() {
-    let mouseDown = Rx.Observable.fromEvent(this.hueslider, "mousedown")
+    let mouseDown = Rx.Observable.fromEvent(this.satslider, "mousedown")
     mouseDown.subscribe(clickEvent => {
-      const hue = Math.round(360*(clickEvent.offsetX/this.props.width)) > 360 ? 360 : Math.round(360*(clickEvent.offsetX/this.props.width))
+      const sat = Math.round(100*(clickEvent.offsetX/this.props.width)) > 100 ? 100 : Math.round(100*(clickEvent.offsetX/this.props.width))
       this.setState({
-        hue: hue,
-        leftNormalised: clickEvent.offsetX > (this.props.width-4) ? (this.props.width-4) : clickEvent.offsetX
+        sat: sat
       })
-      this.props.onHueSlide(hue)
+      this.props.onSatSlide(sat)
 
     })
 
@@ -43,7 +47,7 @@ export default class HueSlider extends React.Component {
     let mouseUps = Rx.Observable.fromEvent(document.body, "mouseup")
 
     let mouseDrags = mouseDown.concatMap(clickEvent => {
-      const xMouseShouldBe = this.state.hue
+      const xMouseShouldBe = this.state.sat*this.props.width/100
       const xMouseIs = clickEvent.clientX
       const xMouseDelta = xMouseIs - xMouseShouldBe
       return mouseMoves.takeUntil(mouseUps).map(moveEvent => {
@@ -58,12 +62,11 @@ export default class HueSlider extends React.Component {
     })
 
     mouseDrags.forEach(leftNorm => {
-      const hue = Math.round(360*(leftNorm/this.props.width))
+      const sat = Math.round(100*(leftNorm/this.props.width))
       this.setState({
-        hue: hue,
-        leftNormalised: leftNorm > (this.props.width) ? this.props.width : leftNorm
+        sat: sat
       })
-      this.props.onHueSlide(hue)
+      this.props.onSatSlide(sat)
     })
 
   }

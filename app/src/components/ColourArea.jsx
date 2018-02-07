@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import { Map } from 'coloreact'
 import Hue from './Hue.jsx'
 import HueSlider from './HueSlider.jsx'
+import SatSlider from './SatSlider.jsx'
+import ValSlider from './ValSlider.jsx'
 const tinycolor = require('tinycolor2')
 import { connect } from 'react-redux'
 
@@ -36,9 +38,9 @@ class ColourArea extends Component {
                     <div className="pseudo-border-hue2"/>
                 </div>
                 <div className="colours-sliders">
-                    <span className="colour-labels">H: {(this.state.h)}</span> <HueSlider onHueSlide={this.handleHue.bind(this)} hue={this.state.h} className="hue-slider" width={350} height={30}/>
-                    <span className="colour-labels">S: {Math.round(this.state.s)}</span> <HueSlider onHueSlide={this.handleHue.bind(this)} hue={this.state.h} className="hue-slider" width={350} height={30}/>
-                    <span className="colour-labels">V: {Math.round(this.state.v)}</span> <HueSlider onHueSlide={this.handleHue.bind(this)} hue={this.state.h} className="hue-slider" width={350} height={30}/>
+                    <span className="colour-labels">H: {(this.state.h)}</span> <HueSlider onHueSlide={this.handleHue.bind(this)} hue={this.state.h} className="slider" width={360} height={30}/>
+                    <span className="colour-labels">S: {Math.round(this.state.s)}</span> <SatSlider onSatSlide={this.handleSat.bind(this)} hue={this.state.h} sat={this.state.s} val={this.state.v} className="slider" width={360} height={30}/>
+                    <span className="colour-labels">V: {Math.round(this.state.v)}</span> <ValSlider onValSlide={this.handleVal.bind(this)} hue={this.state.h} sat={this.state.s} val={this.state.v} className="slider" width={360} height={30}/>
                 </div>
                 <div className="colour-preview" style={{backgroundColor: this.state.hex}}/>
                 <div className="control-buttons">
@@ -52,6 +54,15 @@ class ColourArea extends Component {
     handleHue(h) {
         this.setState({h: h, hex: tinycolor(`hsv(${h}, ${this.state.s}, ${this.state.v})`).toHexString()})
     }
+
+    handleSat(s) {
+        this.setState({s: s, hex: tinycolor(`hsv(${this.state.h}, ${s}, ${this.state.v})`).toHexString()})
+    }
+
+    handleVal(v) {
+        this.setState({v: v, hex: tinycolor(`hsv(${this.state.h}, ${this.state.s}, ${v})`).toHexString()})
+    }
+
 
     handleSaturationValue(s, v) {
         this.setState({ s: s, v: v, hex: tinycolor(`hsv(${this.state.h}, ${s}, ${v})`).toHexString()})
