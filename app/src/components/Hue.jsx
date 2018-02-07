@@ -58,7 +58,7 @@ class Hue extends React.Component {
         const yMouseIs = clickEvent.offsetY
         const xRelativeToCenter = this.centerOffset-xMouseIs
         const yRelativeToCenter = this.centerOffset-yMouseIs
-        const degree = Math.atan(yRelativeToCenter/xRelativeToCenter)*180/Math.PI - 90 + (xRelativeToCenter>=0 ? 0 : 180);
+        const degree = Math.round(Math.atan(yRelativeToCenter/xRelativeToCenter)*180/Math.PI - 90 + (xRelativeToCenter>=0 ? 0 : 180))
         this.setState({
           hue: degree
         })

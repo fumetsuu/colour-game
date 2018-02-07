@@ -1,7 +1,8 @@
-$color-area-bg: rgb(45, 50, 63)
+$color-area-bg: #2d323f
+$main-bg: #3c414e
 
 body, html, #app
-    background-color: grey
+    background-color: $main-bg
     height: 100%
     margin: 0
     padding: 0
@@ -13,45 +14,58 @@ body, html, #app
     height: 100%
     width: 100%
     .colour-area
-        padding: 20px
-        justify-self: end
         grid-column: 2
-        position: relative
-        width: 400px
-        height: 400px
+        justify-self: end
+        height: 100%
         background-color: $color-area-bg
-        .sat-val-map
-            width: 195px
-            height: 195px
-            position: absolute
-            z-index: 100000000 !important
-            left: 50% !important
-            top: 50% !important
-            transform: translate(-50%,-50%)
-        .hue
-            background-color: red
-        .hueslice
-            stroke-width: 20px
-        svg
-            fill: none
-            stroke-width: 20px
-            position: absolute
-            z-index: 1000000
-        .pseudo-border-hue
-            width: 324px
-            height: 324px
-            background-color: white
-            border-radius: 50%
-            position: absolute
-            top: 58px
-            left: 58px
-            user-select: none
-        .pseudo-border-hue2
-            width: 276px
-            height: 276px
-            background-color: $color-area-bg
-            border-radius: 50%
-            position: absolute
-            top: 82px
-            left: 82px
-            user-select: none
+        .colour-area-picker
+            padding: 20px
+            position: relative
+            width: 400px
+            height: 400px
+            .sat-val-map
+                width: 195px
+                height: 195px
+                position: absolute
+                z-index: 100000000 !important
+                left: 50% !important
+                top: 50% !important
+                transform: translate(-50%,-50%)
+            .hue
+                background-color: red
+            .hueslice
+                stroke-width: 20px
+            svg
+                fill: none
+                stroke-width: 20px
+                position: absolute
+                z-index: 1000000
+            .pseudo-border-hue
+                width: 324px
+                height: 324px
+                background-color: white
+                border-radius: 50%
+                position: absolute
+                top: 58px
+                left: 58px
+                user-select: none
+            .pseudo-border-hue2
+                width: 276px
+                height: 276px
+                background-color: $color-area-bg
+                border-radius: 50%
+                position: absolute
+                top: 82px
+                left: 82px
+                user-select: none
+    .colours-text
+        font-family: 'Lato'
+        color: white
+        font-size: 18px
+        tab-size: 40px
+        text-align: center
+        line-height: 40px
+    .colour-preview
+        width: 70%
+        height: 40px
+        justify-self: center
