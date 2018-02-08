@@ -24,18 +24,7 @@ class UserImage extends Component {
     componentWillReceiveProps(props) {
         console.log('props')
         if(props.imagePath && props.imagePath != this.props.imagePath ) {
-            Jimp.read(props.imagePath, (err, img) => {
-                const imgw = img.bitmap.width
-                const imgh = img.bitmap.height
-                if(imgw <= MAX_WIDTH && imgh <= MAX_HEIGHT) {
-                    console.log("smaller")
-                } else if(imgw > MAX_WIDTH || imgh > MAX_HEIGHT) {
-                    if(imgw/imgh > MAX_WIDTH/MAX_HEIGHT) {
-                        img.resize(MAX_WIDTH)
-                    } else if(imgw/imgh<=MAX_WIDTH/MAX_HEIGHT) {
-                        img.resize(Jimp.AUTO, MAX_HEIGHT)
-                    } 
-                } 
+            this.readAndResizeImage(props.imagePath, img=> {
                 this.sampleImage(img)
             })
         }
@@ -55,6 +44,7 @@ class UserImage extends Component {
                         <div className="show-colour" style={{backgroundColor: this.state.userColour}}/>
                     </div>
                     <div className="reveal-button" onClick={this.revealAnswer.bind(this)}>Reveal Answer</div>
+                    <div className="reset-button control-button" onClick={this.resetSample.bind(this)}><i className="material-icons">replay</i></div>
                 </div>
             </div>
         );
@@ -67,15 +57,39 @@ class UserImage extends Component {
         }
     }
 
+    resetSample() {
+        this.readAndResizeImage(this.props.imagePath, img=> {
+            this.sampleImage(img)
+        })
+        this.setState({answer: 'transparent', userColour: 'transparent'})
+    }
+
+    readAndResizeImage(imgpath, cb) {
+        Jimp.read(imgpath, (err, img) => {
+            const imgw = img.bitmap.width
+            const imgh = img.bitmap.height
+            if(imgw <= MAX_WIDTH && imgh <= MAX_HEIGHT) {
+                console.log("smaller")
+            } else if(imgw > MAX_WIDTH || imgh > MAX_HEIGHT) {
+                if(imgw/imgh > MAX_WIDTH/MAX_HEIGHT) {
+                    img.resize(MAX_WIDTH)
+                } else if(imgw/imgh<=MAX_WIDTH/MAX_HEIGHT) {
+                    img.resize(Jimp.AUTO, MAX_HEIGHT)
+                } 
+            }
+            cb(img)
+        })
+    }
+
     sampleImage(img) {
         console.log('from func', img)
-        var startX = Math.floor(Math.random()*(img.bitmap.width-this.props.sampleRadius))+this.props.sampleRadius
-        var startY = Math.floor(Math.random()*(img.bitmap.height-this.props.sampleRadius))+this.props.sampleRadius
+        var startX = Math.floor(Math.random()*(img.bitmap.width))-this.props.sampleRadius
+        var startY = Math.floor(Math.random()*(img.bitmap.height))-this.props.sampleRadius
         this.totalH = 0, this.totalS = 0, this.totalV = 0, this.avgH = 0, this.avgS = 0, this.avgV = 0, this.pixCount = 0
         console.log(startX, startY, this.props.sampleRadius, this.props.sampleRadius)
         img.scan(startX, startY, this.props.sampleRadius, this.props.sampleRadius, (x, y, idx) => {
             if(x == startX || x==startX+this.props.sampleRadius-1 || y==startY || y==startY+this.props.sampleRadius-1) {
-                img.setPixelColor(0xFF0000FF, x, y)
+                img.setPixelColor(0xFFFFFFFF, x, y)
             } else {
                 img.getPixelColor(x, y, (err, hex) => {
                     if(err) throw err
@@ -84,6 +98,8 @@ class UserImage extends Component {
                         this.totalS += tinycolor('#'+hex.toString(16)).toHsv().s
                         this.totalV += tinycolor('#'+hex.toString(16)).toHsv().v
                         this.pixCount++
+                    } else {
+                        console.log("OHHHH", hex)
                     }
                 })
             }
