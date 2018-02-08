@@ -17,8 +17,10 @@ class ColourArea extends Component {
             v: 0,
             hex: "#000000"
         }
-    }1
+    }
+
     render() {
+        this.props.giveColour(this.state.hex)
         return (
             <div className="colour-area">
                 <div className="colour-area-picker">
@@ -87,6 +89,12 @@ const mapDispatchToProps = dispatch => {
             payload: {
                 imagePath: filepath,
                 sampleRadius: 50
+            }
+        }),
+        giveColour: hex => dispatch({
+            type: "GIVE_COLOUR",
+            payload: {
+                colour: hex
             }
         })
     }

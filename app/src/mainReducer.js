@@ -8,6 +8,17 @@ export default function reducer(state = { imagePath: null }, action) {
                 sampleRadius: action.payload.sampleRadius
             })
         }
+        case "ASK_COLOUR": {
+            return Object.assign({}, state, {
+                giveColour: true
+            })
+        }
+        case "GIVE_COLOUR": {
+            console.log(action.payload.colour)
+            return Object.assign({}, state, {
+                colour: action.payload.colour
+            })
+        }
         default: return state
     }
 }
